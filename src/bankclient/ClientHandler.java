@@ -37,6 +37,7 @@ public class ClientHandler extends Thread {
         this.bankClient = bankClient;
         this.socket = socket;
 
+        MenuUI menu = new MenuUI();
     }
 
     public void run() {
@@ -54,6 +55,7 @@ public class ClientHandler extends Thread {
             String message = input.next();
             String specifier;
             String amount= "";
+            String newAccount = "";
             
             while(message.length() != 4){
                 System.out.println("Invalid PIN, must be exactly 4 digits.");
@@ -65,12 +67,31 @@ public class ClientHandler extends Thread {
             specifier = input.next();
 
             if(!specifier.equals("0")){
+                
                 System.out.println("Enter amount for transaction: ");
                 amount = input.next();
+                
+                if(specifier.equals("3")){
+                    System.out.println("Enter 4 digit account to receive transfer:");
+                    newAccount = input.next();
+                    while(newAccount.length() != 4){
+                        System.out.println("Invalid account number, must be exactly 4 digits. \n Enterh 4 digit account to receive transfer:");
+                        newAccount = input.next();
+                    }
+                    
+                    out.writeUTF(message + " " + specifier + " " + newAccount + " " + amount);
+                    
+                } else {
+                    out.writeUTF(message + " " + specifier + " " + amount);
+                }
+                
+                
+            } else {
+                out.writeUTF(message + " " + specifier);
             }
             
             
-            out.writeUTF(message + " " + specifier + " " + amount);
+            
            
             System.out.println(in.readUTF());
             

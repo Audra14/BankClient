@@ -26,7 +26,7 @@ public class MenuUI extends JFrame {
     private JLabel acctNum;
 
     public MenuUI() {
-        this.setVisible(true);
+        
         this.setSize(300, 300);
         this.setTitle("Menu");
         this.setResizable(true);
@@ -44,6 +44,7 @@ public class MenuUI extends JFrame {
         addActionListeners();
 
         this.add(panel);
+        this.setVisible(true);
     }
 
     public void createButtons() {
