@@ -41,7 +41,15 @@ public class ClientHandler extends Thread {
     public void run() {
 
         //this should be seeking input from GUI
+        
         try {
+     
+            out = new DataOutputStream(socket.getOutputStream());
+            in = new DataInputStream(socket.getInputStream());
+            out.writeUTF("0");
+
+            System.out.println(in.readUTF());
+           
             
             
         } catch (Exception e) {
