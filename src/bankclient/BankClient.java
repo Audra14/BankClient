@@ -5,18 +5,51 @@
  */
 package bankclient;
 
+import java.net.Socket;
+
 /**
  *
  * @author astafursky
  */
 public class BankClient {
 
+    Socket socket;
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        // TODO code application logic here
-        //audra 
+    
+    public BankClient (){
+        try {
+            socket = new Socket("127.0.0.1", 5050);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+    
+
+    
+    public String getServerAddress(){
+        return "127.0.0.1";
+    }
+    
+    public void listenForInput(Socket socket){
+        
+    }
+        
+    public static void main(String[] args)throws Exception {
+        
+  
+        BankClient client = new BankClient();
+        Socket socket = new Socket("127.0.0.1", 6666);
+        ClientHandler clientHandler = new ClientHandler(client, socket);
+        clientHandler.start();
+
+        while (true) {
+            client.listenForInput(socket);
+        } 
+        
+    }
+    
+    
     
 }
