@@ -13,6 +13,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.util.Scanner;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -46,11 +47,21 @@ public class ClientHandler extends Thread {
      
             out = new DataOutputStream(socket.getOutputStream());
             in = new DataInputStream(socket.getInputStream());
-            out.writeUTF("0");
-
-            System.out.println(in.readUTF());
-           
             
+            Scanner input = new Scanner(System.in);
+            System.out.println("Enter 4-digit PIN#");
+            
+            String message = input.next();
+            
+            while(message.length() != 4){
+                System.out.println("Invalid PIN, must be exactly 4 digits.");
+                System.out.println("Enter 4-digit PIN#");
+                message = input.next();
+            }
+            
+            out.writeUTF(message + " 0");
+           
+            in.readUTF();
             
         } catch (Exception e) {
             e.printStackTrace();
