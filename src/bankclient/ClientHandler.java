@@ -52,16 +52,27 @@ public class ClientHandler extends Thread {
             System.out.println("Enter 4-digit PIN#");
             
             String message = input.next();
+            String specifier;
+            String amount= "";
             
             while(message.length() != 4){
                 System.out.println("Invalid PIN, must be exactly 4 digits.");
                 System.out.println("Enter 4-digit PIN#");
-                message = input.next();
+                message = input.next();   
             }
             
-            out.writeUTF(message + " 0");
+            System.out.println("Enter 0 for Balance Inquiry \n Enter 1 for Deposit \n Enter 2 for Withdrawal \n Enter 3 for Transfer");
+            specifier = input.next();
+
+            if(!specifier.equals("0")){
+                System.out.println("Enter amount for transaction: ");
+                amount = input.next();
+            }
+            
+            
+            out.writeUTF(message + " " + specifier + " " + amount);
            
-            in.readUTF();
+            System.out.println(in.readUTF());
             
         } catch (Exception e) {
             e.printStackTrace();
