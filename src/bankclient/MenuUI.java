@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  *
@@ -23,17 +24,17 @@ public class MenuUI extends JFrame {
 
     private JPanel panel;
     private JButton balInquiry, deposit, transfer, withdraw;
-    private JLabel acctNum;
+    private JLabel acctNum, acctBal;
 
     public MenuUI() {
         this.setVisible(true);
         this.setSize(300, 300);
-        this.setTitle("Menu");
-        this.setResizable(true);
+        this.setTitle("Bank System");
+        this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        //panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
         acctNum = new JLabel("** Account Number here **");
 
@@ -74,7 +75,7 @@ public class MenuUI extends JFrame {
         deposit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-            // new screen - deposit
+                displayDepositScreen();
             }
         });
         
@@ -91,5 +92,41 @@ public class MenuUI extends JFrame {
             // new screen - withdraw
             }
         });
+    }
+    
+    public void displayDepositScreen() {
+
+        panel.revalidate();
+        panel.removeAll();
+        panel = new JPanel();
+        //panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        
+        
+        JLabel depositAmt = new JLabel("Deposit Amount:");
+        JTextField amtField = new JTextField(10);
+        JButton depositBtn = new JButton("Confirm");
+        
+        acctBal = new JLabel("** Bal here **");
+        
+        panel.add(acctNum);
+        panel.add(acctBal);
+        panel.add(depositAmt);
+        panel.add(Box.createRigidArea(new Dimension(0, 5)));
+        panel.add(amtField);
+        panel.add(Box.createRigidArea(new Dimension(0, 5)));
+        panel.add(depositBtn);
+        
+        this.add(panel);
+        
+        
+        // ** add action listener **
+    }
+    
+    public void displayTransferScreen() {
+        
+    }
+    
+    public void displayWithdrawScreen() {
+        
     }
 }
