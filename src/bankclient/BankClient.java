@@ -20,7 +20,7 @@ public class BankClient {
     
     public BankClient (){
         try {
-            socket = new Socket("127.0.0.1", 5050);
+            socket = new Socket("127.0.0.1", 6666);
         } catch (Exception e) {
             e.printStackTrace();
         }
