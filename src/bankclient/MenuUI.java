@@ -23,16 +23,18 @@ import javax.swing.JTextField;
 public class MenuUI extends JFrame {
 
     private JPanel panel;
-    private JButton balInquiry, deposit, transfer, withdraw;
+    private JButton balInquiry, deposit, transfer, withdraw, submit;
     private JLabel acctNum, acctBal;
+    public ClientHandler client;
 
-    public MenuUI() {
+    public MenuUI(ClientHandler client) {
         
         this.setSize(300, 300);
         this.setTitle("Bank System");
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        this.client = client;
         panel = new JPanel();
         //panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
@@ -64,18 +66,20 @@ public class MenuUI extends JFrame {
     }
 
     public void addActionListeners() {
-
+        
         balInquiry.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
             // get balance
             // display balance
+                client.setSpecifier("0");
             }
         });
         
         deposit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
+                client.setSpecifier("1");
                 displayDepositScreen();
             }
         });
@@ -84,6 +88,7 @@ public class MenuUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent event) {
             // new screen - transfer
+                client.setSpecifier("3");
             }
         });
         
@@ -91,6 +96,7 @@ public class MenuUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent event) {
             // new screen - withdraw
+                client.setSpecifier("2");
             }
         });
     }
