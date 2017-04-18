@@ -40,6 +40,9 @@ public class BankClient {
         BankClient client = new BankClient();
         Socket socket = new Socket("127.0.0.1", 6666);
         ClientHandler clientHandler = new ClientHandler(client, socket);
+        while (clientHandler.authorized == false) {
+            // do nothing
+        }
         clientHandler.start();
         
     }

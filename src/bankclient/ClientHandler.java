@@ -39,10 +39,13 @@ public class ClientHandler extends Thread {
     
     Double transactionAmount;
     String transferAccount;
+    
+    boolean authorized;
 
     public ClientHandler(BankClient bankClient, Socket socket) {
         this.bankClient = bankClient;
         this.socket = socket;
+        authorized = false;
 
         AuthorizationUI menu = new AuthorizationUI(this);
     }
@@ -64,6 +67,9 @@ public class ClientHandler extends Thread {
     
     public void setAmount(double amount){
         this.transactionAmount = amount;
+    }
+    public void setAuthorized(boolean status) {
+        authorized = true;
     }
 
     public void run() {

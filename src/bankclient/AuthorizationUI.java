@@ -28,9 +28,11 @@ public class AuthorizationUI {
     private JTextField pinField;
     private JButton submitBtn;
     private ClientHandler client;
+    private boolean status;
     
     public AuthorizationUI(ClientHandler client) {
         this.client = client;
+        status = false;
         
         frame = new JFrame();
         frame.setSize(300, 300);
@@ -56,7 +58,7 @@ public class AuthorizationUI {
         c.gridy = 1;
         panel.add(pinField, c);
         
-        submitBtn = new JButton();
+        submitBtn = new JButton("Submit");
         c.gridx = 0;
         c.gridy = 2;
         panel.add(submitBtn, c);
@@ -74,9 +76,12 @@ public class AuthorizationUI {
             public void actionPerformed(ActionEvent event) {
                 String pin = pinField.getText();
                 client.setPin(pin);
+                status = true;
+                client.setAuthorized(true);
                 MenuUI menuUI = new MenuUI(client);
                 frame.dispose();
             }
         });
     }
+    
 }
