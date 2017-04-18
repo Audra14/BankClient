@@ -57,11 +57,9 @@ public class MenuUI {
         c.gridy = 0;
         panel.add(acctNum, c);
         
-
         createButtons();
         addActionListeners();
 
-        
         frame.add(panel, BorderLayout.CENTER);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

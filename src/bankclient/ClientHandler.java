@@ -35,6 +35,7 @@ public class ClientHandler extends Thread {
 
     String specifier;
     String acctNum;
+    String pin;
     
     Double transactionAmount;
     String transferAccount;
@@ -53,6 +54,10 @@ public class ClientHandler extends Thread {
     public void setAcctNum(String acctNum) {
         this.acctNum = acctNum;
 
+    }
+    
+    public void setPin (String pin){
+        this.pin = pin;
     }
     
     public void setAmount(double amount){
@@ -91,21 +96,10 @@ public class ClientHandler extends Thread {
             System.out.println("Enter 0 for Balance Inquiry \n Enter 1 for Deposit \n Enter 2 for Withdrawal \n Enter 3 for Transfer");
             //specifier = input.next();
             System.out.println("Specifier = " + specifier);
-
+            
             if (!specifier.equals("0")) {
 
-                //System.out.println("Enter amount for transaction: ");
-                //amount = input.next();
-
                 if (specifier.equals("3")) {
-
-                    //System.out.println("Enter 4 digit account to receive transfer:");
-                    //transferAccount = input.next();
-
-//                    while (transferAccount.length() != 4) {
-//                        System.out.println("Invalid account number, must be exactly 4 digits. \n Enter 4 digit account to receive transfer:");
-//                        transferAccount = input.next();
-//                    }
 
                     out.writeUTF(message + " " + specifier + " " + transferAccount + " " + transactionAmount);
 
