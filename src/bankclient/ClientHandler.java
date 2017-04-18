@@ -35,7 +35,7 @@ public class ClientHandler extends Thread {
 
     String specifier;
     String acctNum;
-    String pin;
+    String pin = "0000";
     
     Double transactionAmount;
     String transferAccount;
@@ -47,6 +47,7 @@ public class ClientHandler extends Thread {
         AuthorizationUI menu = new AuthorizationUI(this);
     }
 
+    
     public void setSpecifier(String specifier) {
         this.specifier = specifier;
     }
@@ -58,6 +59,7 @@ public class ClientHandler extends Thread {
     
     public void setPin (String pin){
         this.pin = pin;
+        System.out.println("Pin is set.");
     }
     
     public void setAmount(double amount){
@@ -74,16 +76,19 @@ public class ClientHandler extends Thread {
 
             Scanner input = new Scanner(System.in);
 
+          
             System.out.println("Validating PIN# " + this.pin + "...");
             out.writeUTF(this.pin);
-            
+
             String pinExists = in.readUTF();
-            
+
             while(pinExists.equals("0")){
                 System.out.println("PIN does not exist, re-enter PIN#");
                 out.writeUTF(input.next());
                 pinExists = in.readUTF();
             }
+                
+            
             
             System.out.println("PIN# Confirmed.");
 
