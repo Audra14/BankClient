@@ -35,6 +35,9 @@ public class ClientHandler extends Thread {
 
     String specifier;
     String acctNum;
+    
+    Double transactionAmount;
+    String transferAccount;
 
     public ClientHandler(BankClient bankClient, Socket socket) {
         this.bankClient = bankClient;
@@ -51,12 +54,16 @@ public class ClientHandler extends Thread {
         this.acctNum = acctNum;
 
     }
+    
+    public void setAmount(double amount){
+        this.transactionAmount = amount;
+    }
 
     public void run() {
 
         //this should be seeking input from GUI
         try {
-
+    
             out = new DataOutputStream(socket.getOutputStream());
             in = new DataInputStream(socket.getInputStream());
 
@@ -65,15 +72,21 @@ public class ClientHandler extends Thread {
 
             String message = input.next();
             //String specifier;
-            String amount = "";
-            String newAccount = "";
+            
+            //String newAccount = "";
 
-            System.out.println(message);
-            while (message.length() != 4) {
-                System.out.println("Invalid PIN, must be exactly 4 digits.");
-                System.out.println("Enter 4-digit PIN#");
-                message = input.next();
+            System.out.println("Validating PIN# " + message + "...");
+            out.writeUTF(message);
+            
+            String pinExists = in.readUTF();
+            
+            while(pinExists.equals("0")){
+                System.out.println("PIN does not exist, re-enter PIN#");
+                out.writeUTF(input.next());
+                pinExists = in.readUTF();
             }
+            
+            System.out.println("PIN# Confirmed.");
 
             System.out.println("Enter 0 for Balance Inquiry \n Enter 1 for Deposit \n Enter 2 for Withdrawal \n Enter 3 for Transfer");
             //specifier = input.next();
@@ -81,23 +94,23 @@ public class ClientHandler extends Thread {
 
             if (!specifier.equals("0")) {
 
-                System.out.println("Enter amount for transaction: ");
-                amount = input.next();
+                //System.out.println("Enter amount for transaction: ");
+                //amount = input.next();
 
                 if (specifier.equals("3")) {
 
-                    System.out.println("Enter 4 digit account to receive transfer:");
-                    newAccount = input.next();
+                    //System.out.println("Enter 4 digit account to receive transfer:");
+                    //transferAccount = input.next();
 
-                    while (newAccount.length() != 4) {
-                        System.out.println("Invalid account number, must be exactly 4 digits. \n Enter 4 digit account to receive transfer:");
-                        newAccount = input.next();
-                    }
+//                    while (transferAccount.length() != 4) {
+//                        System.out.println("Invalid account number, must be exactly 4 digits. \n Enter 4 digit account to receive transfer:");
+//                        transferAccount = input.next();
+//                    }
 
-                    out.writeUTF(message + " " + specifier + " " + newAccount + " " + amount);
+                    out.writeUTF(message + " " + specifier + " " + transferAccount + " " + transactionAmount);
 
                 } else {
-                    out.writeUTF(message + " " + specifier + " " + amount);
+                    out.writeUTF(message + " " + specifier + " " + transactionAmount);
                 }
 
             } else {
