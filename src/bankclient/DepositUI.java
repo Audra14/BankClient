@@ -93,7 +93,10 @@ public class DepositUI {
         depositBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-            // deposit money
+                double depositAmt = Double.valueOf(amtField.getText());
+                client.setAmount(depositAmt);
+                MenuUI menuUI = new MenuUI(client); //back to main menu
+                frame.dispose();
             }
         });
     }

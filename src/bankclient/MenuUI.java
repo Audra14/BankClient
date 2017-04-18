@@ -98,8 +98,6 @@ public class MenuUI {
         balInquiry.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-            // get balance
-            // display balance
                 client.setSpecifier("0");
                 BalanceInquiryUI balanceInquiryUI = new BalanceInquiryUI(client);
                 frame.dispose();
@@ -114,25 +112,21 @@ public class MenuUI {
                 frame.dispose();
             }
         });
-        
-        transfer.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-            // new screen - transfer
-                client.setSpecifier("3");
-                TransferUI transferUI = new TransferUI(client);
-                frame.dispose();
-            }
-        });
-        
         withdraw.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-            // new screen - withdraw
                 client.setSpecifier("2");
                 WithdrawUI withdrawUI = new WithdrawUI(client);
                 frame.dispose();
             }
         });
+        transfer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                client.setSpecifier("3");
+                TransferUI transferUI = new TransferUI(client);
+                frame.dispose();
+            }
+        }); 
     }
 }

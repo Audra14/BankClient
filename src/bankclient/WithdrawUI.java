@@ -92,7 +92,11 @@ public class WithdrawUI {
         withdrawBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-            // withdraw money
+                double withdrawAmt = Double.valueOf(amtField.getText());
+                client.setAmount(withdrawAmt);
+                MenuUI menuUI = new MenuUI(client); //back to main menu
+                frame.dispose();
+                
             }
         });
     }

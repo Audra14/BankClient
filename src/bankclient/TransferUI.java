@@ -100,7 +100,12 @@ public class TransferUI {
         transferBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-            // transfer money
+                String acctTo = transAcctField.getText();
+                double transferAmt = Double.valueOf(amtField.getText());
+                client.setAcctNum(acctTo);
+                client.setAmount(transferAmt);
+                MenuUI menuUI = new MenuUI(client); //back to main menu
+                frame.dispose();
             }
         });
     }
