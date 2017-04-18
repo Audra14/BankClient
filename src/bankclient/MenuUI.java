@@ -5,64 +5,92 @@
  */
 package bankclient;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 /**
  *
  * @author nadaziab
  */
-public class MenuUI extends JFrame {
+public class MenuUI {
 
-    private JPanel panel;
+    private JFrame frame;
+    private JPanel panel, header;
     private JButton balInquiry, deposit, transfer, withdraw, submit;
     private JLabel acctNum, acctBal;
+    private JButton backBtn;
     public ClientHandler client;
 
     public MenuUI(ClientHandler client) {
         
-        this.setSize(300, 300);
-        this.setTitle("Bank System");
-        this.setResizable(false);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame = new JFrame();
+        frame.setSize(300, 300);
+        frame.setLayout(new BorderLayout());
+        frame.setTitle("Bank System");
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.client = client;
         panel = new JPanel();
-        //panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.setLayout(new GridBagLayout());
+        
+        header = new JPanel();
+        header.setLayout(new BorderLayout());
+        backBtn = new JButton("Back");
 
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.BOTH;
+        
         acctNum = new JLabel("** Account Number here **");
-
-        panel.add(acctNum);
-        panel.add(Box.createRigidArea(new Dimension(0, 5)));
+        c.gridx = 0;
+        c.gridy = 0;
+        panel.add(acctNum, c);
+        
 
         createButtons();
         addActionListeners();
 
-        this.add(panel);
-        this.setVisible(true);
+        
+        frame.add(panel, BorderLayout.CENTER);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     public void createButtons() {
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.BOTH;
+        
         balInquiry = new JButton("Balance Inquiry");
+        c.gridx = 0;
+        c.gridy = 1;
+        panel.add(balInquiry, c);
+        
         deposit = new JButton("Deposit");
+        c.gridx = 0;
+        c.gridy = 2;
+        panel.add(deposit, c);
+        
         transfer = new JButton("Transfer");
+        c.gridx = 0;
+        c.gridy = 3;
+        panel.add(transfer, c);
+        
         withdraw = new JButton("Withdraw");
+        c.gridx = 0;
+        c.gridy = 4;
+        panel.add(withdraw, c);
 
-        panel.add(balInquiry);
-        panel.add(Box.createRigidArea(new Dimension(0, 5)));
-        panel.add(deposit);
-        panel.add(Box.createRigidArea(new Dimension(0, 5)));
-        panel.add(transfer);
-        panel.add(Box.createRigidArea(new Dimension(0, 5)));
-        panel.add(withdraw);
     }
 
     public void addActionListeners() {
@@ -73,6 +101,8 @@ public class MenuUI extends JFrame {
             // get balance
             // display balance
                 client.setSpecifier("0");
+                BalanceInquiryUI balanceInquiryUI = new BalanceInquiryUI(client);
+                frame.dispose();
             }
         });
         
@@ -80,7 +110,8 @@ public class MenuUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent event) {
                 client.setSpecifier("1");
-                displayDepositScreen();
+                DepositUI depositUI = new DepositUI(client);
+                frame.dispose();
             }
         });
         
@@ -89,6 +120,8 @@ public class MenuUI extends JFrame {
             public void actionPerformed(ActionEvent event) {
             // new screen - transfer
                 client.setSpecifier("3");
+                TransferUI transferUI = new TransferUI(client);
+                frame.dispose();
             }
         });
         
@@ -97,43 +130,9 @@ public class MenuUI extends JFrame {
             public void actionPerformed(ActionEvent event) {
             // new screen - withdraw
                 client.setSpecifier("2");
+                WithdrawUI withdrawUI = new WithdrawUI(client);
+                frame.dispose();
             }
         });
-    }
-    
-    public void displayDepositScreen() {
-
-        panel.revalidate();
-        panel.removeAll();
-        panel = new JPanel();
-        //panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-        
-        
-        JLabel depositAmt = new JLabel("Deposit Amount:");
-        JTextField amtField = new JTextField(10);
-        JButton depositBtn = new JButton("Confirm");
-        
-        acctBal = new JLabel("** Bal here **");
-        
-        panel.add(acctNum);
-        panel.add(acctBal);
-        panel.add(depositAmt);
-        panel.add(Box.createRigidArea(new Dimension(0, 5)));
-        panel.add(amtField);
-        panel.add(Box.createRigidArea(new Dimension(0, 5)));
-        panel.add(depositBtn);
-        
-        this.add(panel);
-        
-        
-        // ** add action listener **
-    }
-    
-    public void displayTransferScreen() {
-        
-    }
-    
-    public void displayWithdrawScreen() {
-        
     }
 }
