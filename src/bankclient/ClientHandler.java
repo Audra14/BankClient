@@ -44,7 +44,7 @@ public class ClientHandler extends Thread {
         this.bankClient = bankClient;
         this.socket = socket;
 
-        MenuUI menu = new MenuUI(this);
+        AuthorizationUI menu = new AuthorizationUI(this);
     }
 
     public void setSpecifier(String specifier) {
@@ -73,15 +73,9 @@ public class ClientHandler extends Thread {
             in = new DataInputStream(socket.getInputStream());
 
             Scanner input = new Scanner(System.in);
-            System.out.println("Enter 4-digit PIN#");
 
-            String message = input.next();
-            //String specifier;
-            
-            //String newAccount = "";
-
-            System.out.println("Validating PIN# " + message + "...");
-            out.writeUTF(message);
+            System.out.println("Validating PIN# " + this.pin + "...");
+            out.writeUTF(this.pin);
             
             String pinExists = in.readUTF();
             
@@ -101,14 +95,14 @@ public class ClientHandler extends Thread {
 
                 if (specifier.equals("3")) {
 
-                    out.writeUTF(message + " " + specifier + " " + transferAccount + " " + transactionAmount);
+                    out.writeUTF(this.pin + " " + specifier + " " + transferAccount + " " + transactionAmount);
 
                 } else {
-                    out.writeUTF(message + " " + specifier + " " + transactionAmount);
+                    out.writeUTF(this.pin + " " + specifier + " " + transactionAmount);
                 }
 
             } else {
-                out.writeUTF(message + " " + specifier);
+                out.writeUTF(this.pin + " " + specifier);
             }
 
             System.out.println(in.readUTF());
