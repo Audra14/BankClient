@@ -73,7 +73,7 @@ public class ClientHandler extends Thread {
     }
 
     public void run() {
-
+        System.out.println("Handler Running");
         //this should be seeking input from GUI
         try {
     

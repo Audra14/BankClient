@@ -77,6 +77,7 @@ public class AuthorizationUI {
                 String pin = pinField.getText();
                 client.setPin(pin);
                 status = true;
+                // set true
                 client.setAuthorized(true);
                 MenuUI menuUI = new MenuUI(client);
                 frame.dispose();
