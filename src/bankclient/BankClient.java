@@ -42,6 +42,7 @@ public class BankClient {
         ClientHandler clientHandler = new ClientHandler(client, socket);
         
         while (clientHandler.authorized == false) {
+            //
             System.out.println("false");
             // do nothing
         }
