@@ -88,22 +88,17 @@ public class DepositUI {
         addActionListeners();
     }
     
-    private void write (double depositAmt){
-        
-        
+    private void write (double amount){
+       
         Socket socket = client.getSocket();
-        
-        
-        
+
         String pin = client.getPin();
         String specifier = client.getSpecifier();
-        System.out.println("PIN " + pin);
-        System.out.println("specifier " + specifier);
-        System.out.println("deposit amount " + depositAmt);
+
         try {
             out = new DataOutputStream(socket.getOutputStream());
             in = new DataInputStream(socket.getInputStream());
-            out.writeUTF(pin + " " + specifier + " " + depositAmt);
+            out.writeUTF(pin + " " + specifier + " " + amount);
             
             System.out.println(in.readUTF());
         } catch (IOException e){

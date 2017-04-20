@@ -10,6 +10,10 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,6 +32,9 @@ public class WithdrawUI {
     private JTextField amtField;
     private JButton backBtn, withdrawBtn;
     private ClientHandler client;
+    
+    private DataOutputStream out;
+    private DataInputStream in;
 
     public WithdrawUI(ClientHandler client) {
         this.client = client;
@@ -80,6 +87,25 @@ public class WithdrawUI {
         addActionListeners();
     }
     
+    private void write (double amount){
+        
+        Socket socket = client.getSocket();
+        String pin = client.getPin();
+        String specifier = client.getSpecifier();
+        
+        try {
+            out = new DataOutputStream(socket.getOutputStream());
+            in = new DataInputStream(socket.getInputStream());
+            
+            out.writeUTF(pin + " " + specifier + " " + amount);
+            System.out.println(in.readUTF());
+            
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        
+    }
+    
     private void addActionListeners() {
         
         backBtn.addActionListener(new ActionListener() {
@@ -93,7 +119,8 @@ public class WithdrawUI {
             @Override
             public void actionPerformed(ActionEvent event) {
                 double withdrawAmt = Double.valueOf(amtField.getText());
-                client.setAmount(withdrawAmt);
+                //client.setAmount(withdrawAmt);
+                write(withdrawAmt);
                 MenuUI menuUI = new MenuUI(client); //back to main menu
                 frame.dispose();
                 
