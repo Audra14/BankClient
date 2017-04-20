@@ -62,7 +62,7 @@ public class BalanceInquiryUI {
         frame.setVisible(true);
         addActionListeners();
     }
-
+    
     private void addActionListeners() {
         backBtn.addActionListener(new ActionListener() {
             @Override

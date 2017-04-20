@@ -24,7 +24,7 @@ import javax.swing.JTextField;
  *
  * @author astafursky
  */
-public class ClientHandler extends Thread {
+public class ClientHandler {
 
     DataInputStream in;
     DataOutputStream out;
@@ -48,6 +48,7 @@ public class ClientHandler extends Thread {
         authorized = false;
 
         AuthorizationUI menu = new AuthorizationUI(this);
+        handle();
     }
 
     
@@ -65,6 +66,18 @@ public class ClientHandler extends Thread {
         System.out.println("Pin is set.");
     }
     
+    public String getPin(){
+        return this.pin;
+    }
+    
+    public String getSpecifier(){
+        return this.specifier;
+    }
+    
+    public Socket getSocket(){
+        return this.socket;
+    }
+    
     public void setAmount(double amount){
         this.transactionAmount = amount;
     }
@@ -72,7 +85,7 @@ public class ClientHandler extends Thread {
         authorized = true;
     }
 
-    public void run() {
+    public void handle() {
         System.out.println("Handler Running");
         //this should be seeking input from GUI
         try {
@@ -80,43 +93,23 @@ public class ClientHandler extends Thread {
             out = new DataOutputStream(socket.getOutputStream());
             in = new DataInputStream(socket.getInputStream());
 
-            Scanner input = new Scanner(System.in);
-
-          
-            System.out.println("Validating PIN# " + this.pin + "...");
-            out.writeUTF(this.pin);
-
-            String pinExists = in.readUTF();
-
-            while(pinExists.equals("0")){
-                System.out.println("PIN does not exist, re-enter PIN#");
-                out.writeUTF(input.next());
-                pinExists = in.readUTF();
-            }
-                
+            //System.out.println("Specifier = " + specifier);
             
-            
-            System.out.println("PIN# Confirmed.");
-
-            System.out.println("Enter 0 for Balance Inquiry \n Enter 1 for Deposit \n Enter 2 for Withdrawal \n Enter 3 for Transfer");
-            //specifier = input.next();
-            System.out.println("Specifier = " + specifier);
-            
-            if (!specifier.equals("0")) {
-
-                if (specifier.equals("3")) {
-
-                    out.writeUTF(this.pin + " " + specifier + " " + transferAccount + " " + transactionAmount);
-
-                } else {
-                    out.writeUTF(this.pin + " " + specifier + " " + transactionAmount);
-                }
-
-            } else {
-                out.writeUTF(this.pin + " " + specifier);
-            }
-
-            System.out.println(in.readUTF());
+//            if (!specifier.equals("0")) {
+//
+//                if (specifier.equals("3")) {
+//
+//                    out.writeUTF(this.pin + " " + specifier + " " + transferAccount + " " + transactionAmount);
+//
+//                } else {
+//                    out.writeUTF(this.pin + " " + specifier + " " + transactionAmount);
+//                }
+//
+//            } else {
+//                out.writeUTF(this.pin + " " + specifier);
+//            }
+//
+//            System.out.println(in.readUTF());
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -11,6 +11,10 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -31,6 +35,10 @@ public class MenuUI {
     private JLabel acctNum, acctBal;
     private JButton backBtn;
     public ClientHandler client;
+    
+    private DataOutputStream out;
+    private DataInputStream in;
+    
 
     public MenuUI(ClientHandler client) {
         
@@ -90,6 +98,34 @@ public class MenuUI {
         panel.add(withdraw, c);
 
     }
+    
+    public void write(String specifier){
+        
+        Socket socket = client.getSocket();
+        String pin = client.getPin();
+        
+        try {
+            if (!specifier.equals("0")) {
+
+                if (specifier.equals("3")) {
+
+                    //out.writeUTF(pin + " " + specifier + " " + transferAccount + " " + transactionAmount);
+
+                } else {
+                    //out.writeUTF(pin + " " + specifier + " " + transactionAmount);
+                }
+
+            } else {
+                out.writeUTF(pin + " " + specifier);
+            }
+
+            System.out.println(in.readUTF());
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        
+    }
+    
 
     public void addActionListeners() {
         

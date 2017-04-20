@@ -10,6 +10,10 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,6 +32,9 @@ public class DepositUI {
     private JTextField amtField;
     private JButton backBtn, depositBtn;
     private ClientHandler client;
+    
+    private DataOutputStream out;
+    private DataInputStream in;
     
     public DepositUI(ClientHandler client) {
         this.client = client;
@@ -81,7 +88,33 @@ public class DepositUI {
         addActionListeners();
     }
     
+    private void write (double depositAmt){
+        
+        
+        Socket socket = client.getSocket();
+        
+        
+        
+        String pin = client.getPin();
+        String specifier = client.getSpecifier();
+        System.out.println("PIN " + pin);
+        System.out.println("specifier " + specifier);
+        System.out.println("deposit amount " + depositAmt);
+        try {
+            out = new DataOutputStream(socket.getOutputStream());
+            in = new DataInputStream(socket.getInputStream());
+            out.writeUTF(pin + " " + specifier + " " + depositAmt);
+            
+            System.out.println(in.readUTF());
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        
+    }
+    
+    
     private void addActionListeners() {
+        
         
         backBtn.addActionListener(new ActionListener() {
             @Override
@@ -94,7 +127,9 @@ public class DepositUI {
             @Override
             public void actionPerformed(ActionEvent event) {
                 double depositAmt = Double.valueOf(amtField.getText());
-                client.setAmount(depositAmt);
+                
+                write(depositAmt);
+           
                 MenuUI menuUI = new MenuUI(client); //back to main menu
                 frame.dispose();
             }
