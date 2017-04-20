@@ -120,7 +120,7 @@ public class WithdrawUI {
             @Override
             public void actionPerformed(ActionEvent event) {
                 double withdrawAmt = Double.valueOf(amtField.getText());
-                //client.setAmount(withdrawAmt);
+                System.out.println(withdrawAmt);
                 write(withdrawAmt);
                 MenuUI menuUI = new MenuUI(client); //back to main menu
                 frame.dispose();

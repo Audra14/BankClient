@@ -83,6 +83,8 @@ public class BalanceInquiryUI {
             
             out.writeUTF(pin + " " + specifier);
             acctBal.setText(in.readUTF());
+            out.writeUTF(pin);
+            in.readUTF();
         } catch (IOException e){
             e.printStackTrace();
         }

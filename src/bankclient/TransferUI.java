@@ -105,7 +105,7 @@ public class TransferUI {
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
             
-            out.writeUTF(pin + " " + acct + " " + amount);
+            out.writeUTF(pin + " " + specifier + " " + acct + " " + amount);
             System.out.println(in.readUTF());
             out.writeUTF(pin);
             in.readUTF();
