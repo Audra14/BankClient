@@ -99,7 +99,8 @@ public class WithdrawUI {
             
             out.writeUTF(pin + " " + specifier + " " + amount);
             System.out.println(in.readUTF());
-            
+            out.writeUTF(pin);
+            in.readUTF();
         } catch (IOException e){
             e.printStackTrace();
         }

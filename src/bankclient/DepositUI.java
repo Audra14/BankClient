@@ -101,6 +101,8 @@ public class DepositUI {
             out.writeUTF(pin + " " + specifier + " " + amount);
             
             System.out.println(in.readUTF());
+            out.writeUTF(pin);
+            in.readUTF();
         } catch (IOException e){
             e.printStackTrace();
         }

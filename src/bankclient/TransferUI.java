@@ -16,6 +16,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import java.net.*;
+import java.io.*;
+
 /**
  *
  * @author nadaziab
@@ -27,6 +30,9 @@ public class TransferUI {
     private JTextField transAcctField, amtField;
     private JButton backBtn, transferBtn;
     private ClientHandler client;
+    
+    private DataOutputStream out;
+    private DataInputStream in;
     
     public TransferUI(ClientHandler client) {
         this.client = client;
@@ -88,6 +94,26 @@ public class TransferUI {
         frame.setVisible(true);
         addActionListeners();
     }
+    
+    private void write (String acct, double amount){
+        Socket socket = client.getSocket();
+        
+        String pin = client.getPin();
+        String specifier = client.getSpecifier();
+        
+        try {
+            in = new DataInputStream(socket.getInputStream());
+            out = new DataOutputStream(socket.getOutputStream());
+            
+            out.writeUTF(pin + " " + acct + " " + amount);
+            System.out.println(in.readUTF());
+            out.writeUTF(pin);
+            in.readUTF();
+            
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 
     private void addActionListeners() {
         backBtn.addActionListener(new ActionListener() {
@@ -102,8 +128,7 @@ public class TransferUI {
             public void actionPerformed(ActionEvent event) {
                 String acctTo = transAcctField.getText();
                 double transferAmt = Double.valueOf(amtField.getText());
-                client.setAcctNum(acctTo);
-                client.setAmount(transferAmt);
+                write(acctTo, transferAmt);
                 MenuUI menuUI = new MenuUI(client); //back to main menu
                 frame.dispose();
             }
