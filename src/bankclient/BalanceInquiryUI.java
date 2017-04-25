@@ -51,15 +51,10 @@ public class BalanceInquiryUI {
         
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
-        
-        acctNum = new JLabel("** Acct Num here **");
-        c.gridx = 0;
-        c.gridy = 0;
-        main.add(acctNum, c);
 
         acctBal = new JLabel("** Acct Bal here **");
         c.gridx = 0;
-        c.gridy = 1;
+        c.gridy = 0;
         main.add(acctBal, c);
         
         header.add(backBtn, BorderLayout.WEST);

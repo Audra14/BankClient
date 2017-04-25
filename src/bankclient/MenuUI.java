@@ -60,11 +60,7 @@ public class MenuUI {
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
         
-        acctNum = new JLabel("** Account Number here **");
-        c.gridx = 0;
-        c.gridy = 0;
-        panel.add(acctNum, c);
-        
+       
         createButtons();
         addActionListeners();
 
@@ -79,22 +75,22 @@ public class MenuUI {
         
         balInquiry = new JButton("Balance Inquiry");
         c.gridx = 0;
-        c.gridy = 1;
+        c.gridy = 0;
         panel.add(balInquiry, c);
         
         deposit = new JButton("Deposit");
         c.gridx = 0;
-        c.gridy = 2;
+        c.gridy = 1;
         panel.add(deposit, c);
         
         transfer = new JButton("Transfer");
         c.gridx = 0;
-        c.gridy = 3;
+        c.gridy = 2;
         panel.add(transfer, c);
         
         withdraw = new JButton("Withdraw");
         c.gridx = 0;
-        c.gridy = 4;
+        c.gridy = 3;
         panel.add(withdraw, c);
 
     }

@@ -6,6 +6,7 @@
 package bankclient;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -17,6 +18,7 @@ import java.net.Socket;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -54,29 +56,20 @@ public class WithdrawUI {
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
 
-        acctNum = new JLabel("** Acct Num here **");
-        c.gridx = 0;
-        c.gridy = 0;
-        main.add(acctNum, c);
-
-        acctBal = new JLabel("** Acct Bal here **");
-        c.gridx = 0;
-        c.gridy = 1;
-        main.add(acctBal, c);
 
         withdrawAmt = new JLabel("Withdraw Amount:");
         c.gridx = 0;
-        c.gridy = 2;
+        c.gridy = 0;
         main.add(withdrawAmt, c);
 
         amtField = new JTextField();
         c.gridx = 0;
-        c.gridy = 3;
+        c.gridy = 1;
         main.add(amtField, c);
 
         withdrawBtn = new JButton("Confirm");
         c.gridx = 0;
-        c.gridy = 4;
+        c.gridy = 2;
         main.add(withdrawBtn, c);
 
         header.add(backBtn, BorderLayout.WEST);
@@ -97,8 +90,10 @@ public class WithdrawUI {
             out = new DataOutputStream(socket.getOutputStream());
             in = new DataInputStream(socket.getInputStream());
             
-            out.writeUTF(pin + " " + specifier + " " + amount);
-            System.out.println(in.readUTF());
+            String feedback = in.readUTF();
+            Component frame = new JFrame();
+            JOptionPane.showMessageDialog(frame, feedback);
+            
             out.writeUTF(pin);
             in.readUTF();
         } catch (IOException e){

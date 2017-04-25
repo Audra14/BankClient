@@ -6,6 +6,7 @@
 package bankclient;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -18,6 +19,7 @@ import javax.swing.JTextField;
 
 import java.net.*;
 import java.io.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -52,39 +54,30 @@ public class TransferUI {
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
         
-        acctNum = new JLabel("** Acct Num here **");
-        c.gridx = 0;
-        c.gridy = 0;
-        main.add(acctNum, c);
-
-        acctBal = new JLabel("** Acct Bal here **");
-        c.gridx = 0;
-        c.gridy = 1;
-        main.add(acctBal, c);
 
         transferAcct = new JLabel("Enter 4-digit PIN# for account to transfer to");
         c.gridx = 0;
-        c.gridy = 2;
+        c.gridy = 0;
         main.add(transferAcct, c);
         
         transAcctField = new JTextField();
         c.gridx = 0;
-        c.gridy = 3;
+        c.gridy = 1;
         main.add(transAcctField, c);
         
         transferAmt = new JLabel("Transfer Amount:");
         c.gridx = 0;
-        c.gridy = 4;
+        c.gridy = 2;
         main.add(transferAmt, c);
 
         amtField = new JTextField();
         c.gridx = 0;
-        c.gridy = 5;
+        c.gridy = 3;
         main.add(amtField, c);
 
         transferBtn = new JButton("Confirm");
         c.gridx = 0;
-        c.gridy = 6;
+        c.gridy = 4;
         main.add(transferBtn, c);
 
         header.add(backBtn, BorderLayout.WEST);
@@ -106,7 +99,11 @@ public class TransferUI {
             out = new DataOutputStream(socket.getOutputStream());
             
             out.writeUTF(pin + " " + specifier + " " + acct + " " + amount);
-            System.out.println(in.readUTF());
+            
+            String feedback = in.readUTF();
+            Component frame = new JFrame();
+            JOptionPane.showMessageDialog(frame, feedback);
+            
             out.writeUTF(pin);
             in.readUTF();
             
